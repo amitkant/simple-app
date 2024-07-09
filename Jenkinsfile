@@ -3,14 +3,14 @@ pipeline {
     tools {
         maven 'maven3'
     }
-    options {
+    /*options {
         buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
-    }
+    }*/
     stages{
         stage('Build'){
             steps{
                  sh script: 'mvn clean package'
-                 archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
+                 //archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
             }
         }
         stage('Upload War To Nexus'){
@@ -29,7 +29,7 @@ pipeline {
                     ], 
                     credentialsId: 'nexus3', 
                     groupId: 'in.javahome', 
-                    nexusUrl: '172.31.15.204:8081', 
+                    nexusUrl: 'localhost:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: nexusRepoName, 
